@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -118,15 +117,7 @@ path:hover {
     box-shadow: 6px 6px 30px --4px rgba(0,0,0,0.75);
     cursor: pointer;
 }
-.verticle-line{
-    position:absolute;
-    border-left: 2px solid gray;
-    height: 790px;
-    top: 6.75%;
-    left: 50%;
-    width: 3px;
-    z-index: 2;
-}
+
 
 .country{
     position: relative;
@@ -136,7 +127,18 @@ path:hover {
     height: 550px;
     width: 500px;
 }
-
+.details {
+    position: absolute;
+    top: 7%;
+    left: 45%;
+    font-size: xx-large;
+}
+.avgtemp{
+    position: absolute;
+    top: 15%;
+    left: 30%;
+    font-size: large;
+}
 </style>
 
 <body>
@@ -150,13 +152,37 @@ path:hover {
     </div>
 
     <div class ="popup">
-        <div class = verticle-line>
-    
-        </div>
+
         <div class="popup-content">
             <img src="close.png" alt="Close" class="close">
-            <img src="india.jpg" alt="India's Map" class="country">
-
+            
+            
+            <div class="country-details">
+                <div class="detail">
+                    <p>Country Details: <span id="details"></span></p>
+                </div>
+                <div class="detail">
+                    <p>Average Temperature: <span id="avgTemp"></span></p>
+                </div>
+                <div class="detail">
+                    <p>Carbon Emissions: <span id="carbonEmissions"></span></p>
+                </div>
+                <div class="detail">
+                    <p>Sea Level Rise: <span id="seaLevelRise"></span></p>
+                </div>
+                <div class="detail">
+                    <p>Air Quality: <span id="airQuality"></span></p>
+                </div>
+                <div class="detail">
+                    <p>Forest Cover: <span id="forestCover"></span></p>
+                </div>
+            </div>
+            
+            </div>
+            
+            </div>
+            </div>
+            
         </div>
     
     </div>
@@ -1697,35 +1723,263 @@ path:hover {
  </circle>
 </svg>
 <script>
+   
+    // Function to display country details
+    function displayCountryDetails(countryName) {
+        // Manually defined country details
+        const countryDetails = {
+     "India": {
+        "avgTemp": "24.94°C",
+        "carbonEmissions": "1.58 mt",
+        "seaLevelRise": "3.3mm/year",
+        "airQuality": "Bad",
+        "forestCover": "24.62%"
+    },
+    "China": {
+        "avgTemp": "7.59°C",
+        "carbonEmissions": "7.76 mt",
+        "seaLevelRise": "3.4mm/year",
+        "airQuality": "Bad",
+        "forestCover": "23.63%" 
+    },
+    "Indonesia": {
+        "avgTemp": "25.96°C",
+        "carbonEmissions": "2.07 mt",
+        "seaLevelRise": "3.9mm/year",
+        "airQuality": "Bad",
+        "forestCover": "51.2%"
+    },
+    "Pakistan": {
+        "avgTemp": "21.38°C",
+        "carbonEmissions": "0.81 mt",
+        "seaLevelRise": "1.1mm/year",
+        "airQuality": "Bad",
+        "forestCover": "5%"
+    },
+    "Bangladesh": {
+        "avgTemp": "25.71°C",
+        "carbonEmissions": "0.51 mt",
+        "seaLevelRise": "1 cm/year",
+        "airQuality": "Bad",
+        "forestCover": "11.1%"
+    },
+    "Japan": {
+        "avgTemp": "11.78°C",
+        "carbonEmissions": "8.03 mt",
+        "seaLevelRise": "2.9mm/year",
+        "airQuality": "Moderate",
+        "forestCover": "68.5%"
+    },
+    "Philippines": {
+        "avgTemp": "26.27°C",
+        "carbonEmissions": "1.19 mt",
+        "seaLevelRise": "6mm/year",
+        "airQuality": "Moderate",
+        "forestCover": "25.7%"
+    },
+    "Vietnam": {
+        "avgTemp": "24.79°C",
+        "carbonEmissions": "3.68 mt",
+        "seaLevelRise": "3.6mm/year",
+        "airQuality": "Bad",
+        "forestCover": "39.7%"
+    },
+    "Iran": {
+        "avgTemp": "18.34°C",
+        "carbonEmissions": "7.06 mt",
+        "seaLevelRise": "1cm/year",
+        "airQuality": "Moderate",
+        "forestCover": "6.8%"
+    },
+    "Turkey": {
+        "avgTemp": "11.66°C",
+        "carbonEmissions": "4.89 mt",
+        "seaLevelRise": "1cm/year",
+        "airQuality": "Bad",
+        "forestCover": "14.7%"
+    },
+    "Thailand": {
+    "avgTemp": "29°C",
+    "carbonEmissions": "275.3 tons",
+    "seaLevelRise": "4 mm",
+    "airQuality": "64",
+    "forestCover": "31.57%"
+},
+"Myanmar": {
+    "avgTemp": "21°C",
+    "carbonEmissions": "338 tons",
+    "seaLevelRise": "3 mm",
+    "airQuality": "42",
+    "forestCover": "42.19%"
+},
+"South Korea": {
+    "avgTemp": "13°C",
+    "carbonEmissions": "676 tons",
+    "seaLevelRise": "3.03 mm",
+    "airQuality": "58",
+    "forestCover": "64.3%"
+},
+"Iraq": {
+    "avgTemp": "31.7°C",
+    "carbonEmissions": "177.8 tons",
+    "seaLevelRise": "3 mm",
+    "airQuality": "69",
+    "forestCover": "1.9%"
+},
+"Afghanistan": {
+    "avgTemp": "12.3°C",
+    "carbonEmissions": "608 tons",
+    "seaLevelRise": "3 mm",
+    "airQuality": "58.8",
+    "forestCover": "1.3%"
+},
+"Saudi Arabia": {
+    "avgTemp": "25.94°C",
+    "carbonEmissions": "608 tons",
+    "seaLevelRise": "3 mm",
+    "airQuality": "57.2",
+    "forestCover": "0.45%"
+},
+"Uzbekistan": {
+    "avgTemp": "15.3°C",
+    "carbonEmissions": "109.08 tons",
+    "seaLevelRise": "3 mm",
+    "airQuality": "55",
+    "forestCover": "8.4%"
+},
+"Yemen": {
+    "avgTemp": "25.54°C",
+    "carbonEmissions": "107 tons",
+    "seaLevelRise": "3 mm",
+    "airQuality": "59",
+    "forestCover": "1%"
+},
+"Malaysia": {
+    "avgTemp": "25.4°C",
+    "carbonEmissions": "272.9 tons",
+    "seaLevelRise": "3 mm",
+    "airQuality": "59",
+    "forestCover": "1%"
+},
+"Nepal": {
+    "avgTemp": "26°C",
+    "carbonEmissions": "143 tons",
+    "seaLevelRise": "3 mm",
+    "airQuality": "34",
+    "forestCover": "4.38%"
+},
+"North Korea": {
+    "avgTemp": "6.98°C",
+    "carbonEmissions": "58,708,734 tons",
+    "seaLevelRise": "3.3mm",
+    "airQuality": "20.64",
+    "forestCover": "0.22%"
+},
+"Syria": {
+    "avgTemp": "18.75°C",
+    "carbonEmissions": "38,054,696 tons",
+    "seaLevelRise": "2.7 mm",
+    "airQuality": "20",
+    "forestCover": "2.5%"
+},
+"Sri Lanka": {
+    "avgTemp": "27.25°C",
+    "carbonEmissions": "18,454,691 tons",
+    "seaLevelRise": "1.41 mm",
+    "airQuality": "20.7",
+    "forestCover": "29.7%"
+},
+"Kazakhstan": {
+    "avgTemp": "7.11°C",
+    "carbonEmissions": "231,919,540 tons",
+    "seaLevelRise": "3 mm",
+    "airQuality": "23",
+    "forestCover": "1.2%"
+},
+"Cambodia": {
+    "avgTemp": "27.41°C",
+    "carbonEmissions": "6,496,958 tons",
+    "seaLevelRise": "2.6 mm",
+    "airQuality": "20.81",
+    "forestCover": "57.2%"
+},
+"Jordan": {
+    "avgTemp": "19.52°C",
+    "carbonEmissions": "22,772,370 tons",
+    "seaLevelRise": "3 mm",
+    "airQuality": "17.71",
+    "forestCover": "1.1%"
+},
+"Azerbaijan": {
+    "avgTemp": "12.96°C",
+    "carbonEmissions": "33,614,235 tons",
+    "seaLevelRise": "3.84 mm",
+    "airQuality": "18.9",
+    "forestCover": "31%"
+},
+"Tajikistan": {
+    "avgTemp": "3.85°C",
+    "carbonEmissions": "6,049,757 tons",
+    "seaLevelRise": "0.41 mm",
+    "airQuality": "46",
+    "forestCover": "2.9%"
+},
+"United Arab Emirates": {
+    "avgTemp": "28.17°C",
+    "carbonEmissions": "218,788,684 tons",
+    "seaLevelRise": "2.2 mm",
+    "airQuality": "45.9",
+    "forestCover": "3.7%"
+},
+"Israel": {
+    "avgTemp": "19.99°C",
+    "carbonEmissions": "65,201,588 tons",
+    "seaLevelRise": "0.4 cm",
+    "airQuality": "18.8",
+    "forestCover": "7.1%"
+}
+
+
+            // Add more country details as needed
+        };
+
+        // Get the country details based on the clicked country name
+        const details = countryDetails[countryName];
+
+        // Display the details in the popup
+        document.getElementById('avgTemp').textContent = details.avgTemp;
+        document.getElementById('carbonEmissions').textContent = details.carbonEmissions;
+        document.getElementById('seaLevelRise').textContent = details.seaLevelRise;
+        document.getElementById('airQuality').textContent = details.airQuality;
+        document.getElementById('forestCover').textContent = details.forestCover;
+    }
+
+    // Add click event listener to more details button
     document.getElementById("details").addEventListener("click", function(){
-            document.querySelector(".popup").style.display ="flex";
-        });
-
-        document.querySelector(".close").addEventListener("click",function(){
-            document.querySelector(".popup").style.display ="none";
-        });
-
-        document.querySelectorAll('path').forEach(function(country) {
-            country.addEventListener('click', function() {
-                // Get country name from ID
-                const countryName = this.id;
-                // Update the text content with the name of the clicked country
-                document.getElementById('countryName').textContent = countryName;
-            });
-        });
-        ocument.querySelectorAll('path.allPaths').forEach(function(country) {
-    country.addEventListener('click', function() {
-        // Get country name from ID
-        const countryName = this.id;
-        
-        // Update the text content with the name of the clicked country
-        document.getElementById('namep').textContent = countryName;
+        // Show the popup
+        document.querySelector(".popup").style.display ="flex";
     });
-});
 
+    // Add click event listener to close button
+    document.querySelector(".close").addEventListener("click",function(){
+        // Hide the popup
+        document.querySelector(".popup").style.display ="none";
+    });
 
-
-    </script>
+    // Add click event listener to each country path
+    document.querySelectorAll('path.allPaths').forEach(function(country) {
+        country.addEventListener('click', function() {
+            // Get country name from ID
+            const countryName = this.id;
+            // Update the text content with the name of the clicked country
+            document.getElementById('namep').textContent = countryName;
+            // Display country details
+            displayCountryDetails(countryName);
+            // Show the popup
+            document.querySelector(".popup").style.display = "flex";
+        });
+    });
+</script>
 <!-- Code injected by live-server -->
 <script>
 	// <![CDATA[  <-- For SVG support
