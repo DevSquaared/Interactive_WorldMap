@@ -5,193 +5,68 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Climate Change</title>
-
+    <link rel = "stylesheet" href="style.css">
+    
 
 </head>
 
-<style> 
-    *{
-        margin: 0;
-        padding: 0;
-    }   
+ 
+
     
-path:hover {
-    fill: rgb(63, 57, 57); 
-    cursor: pointer; 
-}
-
-    body{
-        background-color:rgb(3, 19, 70);
-        overflow-x: hidden;
-        overflow-y: hidden;
-    }
-    #name{
-    position: relative; 
-    top: 1%; 
-    left: 0%;
-    background-color:rgb(3, 19, 70);
-    width: fit-content;
-    opacity:1;
-    border-radius: 0;
-    border: 3px solid rgb(3, 19, 70);;
-    padding: 5px;
-    font-size: 1.5rem;
-    color:white;
-    }
-    
-    #temp{
-     position: absolute;
-    top: 5% ; 
-    left: 1%;
-    background-color:rgb(3, 19, 70);
-    width: fit-content;
-    opacity:1;
-    border-radius: 0;
-    border: 3px solid rgb(3, 19, 70);
-    padding: 5px;
-    font-size: 1.5rem;
-    color:white;
-    }
-    .container {
-    position: absolute;
-    top:1%; 
-    right: 1%; 
-    text-align: right;
-}
-.container .button {
-    background-color: #0d0e0d;
-    border: none;
-    border-radius: 1%;
-    color: white;
-    padding: 10px 15px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-    font-weight:lighter;
-    transition: color 0.4s;
-}
-.button:hover{
-    background: #0d0e0d;
-    color: white;
-    
-
-}
-
-.popup{
-    background-color: rgba(0,0,0,0.6);
-    position: absolute;
-    height: 100%;
-    width: 110%;
-    top:0%;
-    display:none;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-
-}
-.popup-content{
-    height: 750px;
-    width: 1000px;
-    background: white;
-    padding:20px;
-    border-radius:7px;
-    position: absolute ;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    margin: auto;
-    z-index: 1;
-
-}
-.close{
-    position: absolute;
-    height: 35px;
-    width: 35px;
-    top: -29px;
-    right: -25px;
-    background-color: white;
-    border-radius: 50%;
-    box-shadow: 6px 6px 30px --4px rgba(0,0,0,0.75);
-    cursor: pointer;
-}
-
-
-.country{
-    position: relative;
-    z-index: 2;
-    left: -25%;
-    top: 5%;
-    height: 550px;
-    width: 500px;
-}
-.details {
-    position: absolute;
-    top: 7%;
-    left: 45%;
-    font-size: xx-large;
-}
-.avgtemp{
-    position: absolute;
-    top: 15%;
-    left: 30%;
-    font-size: large;
-}
-</style>
-
 <body>
 
     <div id="name">
         <p id ="namep"> Country Name: </p>
     </div>
 
-    <div class="container" id="details">
+    <!--<div class="container" id="details">
         <a href="#" class ="button" id="button"> More Details </a>
-    </div>
+    </div> -->
 
-    <div class ="popup">
+       
+<div class="popup">
+    <div class="popup-content">
+        <!-- Close button moved inside content, easier for absolute positioning relative to the content box -->
+        <button class="close" aria-label="Close popup">×</button> 
+        <!-- Changed img to button with '×' symbol, easier to style -->
 
-        <div class="popup-content">
-            <img src="close.png" alt="Close" class="close">
-            
-            
-            <div class="country-details">
-                <div class="detail">
-                    <p>Country Details: <span id="details"></span></p>
-                </div>
-                <div class="detail">
-                    <p>Average Temperature: <span id="avgTemp"></span></p>
-                </div>
-                <div class="detail">
-                    <p>Carbon Emissions: <span id="carbonEmissions"></span></p>
-                </div>
-                <div class="detail">
-                    <p>Sea Level Rise: <span id="seaLevelRise"></span></p>
-                </div>
-                <div class="detail">
-                    <p>Air Quality: <span id="airQuality"></span></p>
-                </div>
-                <div class="detail">
-                    <p>Forest Cover: <span id="forestCover"></span></p>
-                </div>
+        <h2 id="popupCountryName">Country Name Here</h2> <!-- Added heading -->
+
+        <div class="country-details">
+            <div id="popupSpinnerContainer" class="spinner-container" style="display: none;">
+                <div class="spinner"></div>
             </div>
-            
-            </div>
-            
-            </div>
-            </div>
-            
-        </div>
+            <div id="popupError" style="display: none; text-align: center; color: #f87171; margin-bottom: 1rem;"></div>
+            <div id="popupError" style="display: none; text-align: center; color: #f87171; margin-bottom: 1rem;"></div>
+
+            <div class="detail-grid"> <!-- Use a grid for better layout -->
+                <div class="detail-item">
+                    <span class="label">Capital:</span>
+                    <span id="popupCapital" class="value"></span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Region:</span>
+                    <span id="popupRegion" class="value"></span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Population:</span>
+                    <span id="popupPopulation" class="value"></span>
+                </div>
+                <div class="detail-item flag-container"> <!-- Container for flag -->
+                     <span class="label">Flag:</span>
+                     <img id="popupFlag" src="" alt="Country Flag" style="display: none;"/> <!-- Image for the flag -->
+                </div>
+            </div> <!-- End detail-grid -->
+        </div> <!-- End country-details -->
+
+    </div> <!-- End popup-content -->
+</div> <!-- End popup -->
+
     
-    </div>
-
-
 
  
 
-    <?xml version="1.0"?>
+
 
 <svg baseprofile="tiny" fill="#ececec" height="857" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width=".2" version="1.2" viewbox="0 0 2000 857" width="2000" xmlns="http://www.w3.org/2000/svg">
     <text id="countryName" x="10" y="20" font-size="18" font-family="Arial"></text>
@@ -1722,301 +1597,6 @@ path:hover {
  <circle cx="1798.2" cy="719.3" id="2">
  </circle>
 </svg>
-<script>
-   
-    // Function to display country details
-    function displayCountryDetails(countryName) {
-        // Manually defined country details
-        const countryDetails = {
-     "India": {
-        "avgTemp": "24.94°C",
-        "carbonEmissions": "1.58 mt",
-        "seaLevelRise": "3.3mm/year",
-        "airQuality": "Bad",
-        "forestCover": "24.62%"
-    },
-    "China": {
-        "avgTemp": "7.59°C",
-        "carbonEmissions": "7.76 mt",
-        "seaLevelRise": "3.4mm/year",
-        "airQuality": "Bad",
-        "forestCover": "23.63%" 
-    },
-    "Indonesia": {
-        "avgTemp": "25.96°C",
-        "carbonEmissions": "2.07 mt",
-        "seaLevelRise": "3.9mm/year",
-        "airQuality": "Bad",
-        "forestCover": "51.2%"
-    },
-    "Pakistan": {
-        "avgTemp": "21.38°C",
-        "carbonEmissions": "0.81 mt",
-        "seaLevelRise": "1.1mm/year",
-        "airQuality": "Bad",
-        "forestCover": "5%"
-    },
-    "Bangladesh": {
-        "avgTemp": "25.71°C",
-        "carbonEmissions": "0.51 mt",
-        "seaLevelRise": "1 cm/year",
-        "airQuality": "Bad",
-        "forestCover": "11.1%"
-    },
-    "Japan": {
-        "avgTemp": "11.78°C",
-        "carbonEmissions": "8.03 mt",
-        "seaLevelRise": "2.9mm/year",
-        "airQuality": "Moderate",
-        "forestCover": "68.5%"
-    },
-    "Philippines": {
-        "avgTemp": "26.27°C",
-        "carbonEmissions": "1.19 mt",
-        "seaLevelRise": "6mm/year",
-        "airQuality": "Moderate",
-        "forestCover": "25.7%"
-    },
-    "Vietnam": {
-        "avgTemp": "24.79°C",
-        "carbonEmissions": "3.68 mt",
-        "seaLevelRise": "3.6mm/year",
-        "airQuality": "Bad",
-        "forestCover": "39.7%"
-    },
-    "Iran": {
-        "avgTemp": "18.34°C",
-        "carbonEmissions": "7.06 mt",
-        "seaLevelRise": "1cm/year",
-        "airQuality": "Moderate",
-        "forestCover": "6.8%"
-    },
-    "Turkey": {
-        "avgTemp": "11.66°C",
-        "carbonEmissions": "4.89 mt",
-        "seaLevelRise": "1cm/year",
-        "airQuality": "Bad",
-        "forestCover": "14.7%"
-    },
-    "Thailand": {
-    "avgTemp": "29°C",
-    "carbonEmissions": "275.3 tons",
-    "seaLevelRise": "4 mm",
-    "airQuality": "64",
-    "forestCover": "31.57%"
-},
-"Myanmar": {
-    "avgTemp": "21°C",
-    "carbonEmissions": "338 tons",
-    "seaLevelRise": "3 mm",
-    "airQuality": "42",
-    "forestCover": "42.19%"
-},
-"South Korea": {
-    "avgTemp": "13°C",
-    "carbonEmissions": "676 tons",
-    "seaLevelRise": "3.03 mm",
-    "airQuality": "58",
-    "forestCover": "64.3%"
-},
-"Iraq": {
-    "avgTemp": "31.7°C",
-    "carbonEmissions": "177.8 tons",
-    "seaLevelRise": "3 mm",
-    "airQuality": "69",
-    "forestCover": "1.9%"
-},
-"Afghanistan": {
-    "avgTemp": "12.3°C",
-    "carbonEmissions": "608 tons",
-    "seaLevelRise": "3 mm",
-    "airQuality": "58.8",
-    "forestCover": "1.3%"
-},
-"Saudi Arabia": {
-    "avgTemp": "25.94°C",
-    "carbonEmissions": "608 tons",
-    "seaLevelRise": "3 mm",
-    "airQuality": "57.2",
-    "forestCover": "0.45%"
-},
-"Uzbekistan": {
-    "avgTemp": "15.3°C",
-    "carbonEmissions": "109.08 tons",
-    "seaLevelRise": "3 mm",
-    "airQuality": "55",
-    "forestCover": "8.4%"
-},
-"Yemen": {
-    "avgTemp": "25.54°C",
-    "carbonEmissions": "107 tons",
-    "seaLevelRise": "3 mm",
-    "airQuality": "59",
-    "forestCover": "1%"
-},
-"Malaysia": {
-    "avgTemp": "25.4°C",
-    "carbonEmissions": "272.9 tons",
-    "seaLevelRise": "3 mm",
-    "airQuality": "59",
-    "forestCover": "1%"
-},
-"Nepal": {
-    "avgTemp": "26°C",
-    "carbonEmissions": "143 tons",
-    "seaLevelRise": "3 mm",
-    "airQuality": "34",
-    "forestCover": "4.38%"
-},
-"North Korea": {
-    "avgTemp": "6.98°C",
-    "carbonEmissions": "58,708,734 tons",
-    "seaLevelRise": "3.3mm",
-    "airQuality": "20.64",
-    "forestCover": "0.22%"
-},
-"Syria": {
-    "avgTemp": "18.75°C",
-    "carbonEmissions": "38,054,696 tons",
-    "seaLevelRise": "2.7 mm",
-    "airQuality": "20",
-    "forestCover": "2.5%"
-},
-"Sri Lanka": {
-    "avgTemp": "27.25°C",
-    "carbonEmissions": "18,454,691 tons",
-    "seaLevelRise": "1.41 mm",
-    "airQuality": "20.7",
-    "forestCover": "29.7%"
-},
-"Kazakhstan": {
-    "avgTemp": "7.11°C",
-    "carbonEmissions": "231,919,540 tons",
-    "seaLevelRise": "3 mm",
-    "airQuality": "23",
-    "forestCover": "1.2%"
-},
-"Cambodia": {
-    "avgTemp": "27.41°C",
-    "carbonEmissions": "6,496,958 tons",
-    "seaLevelRise": "2.6 mm",
-    "airQuality": "20.81",
-    "forestCover": "57.2%"
-},
-"Jordan": {
-    "avgTemp": "19.52°C",
-    "carbonEmissions": "22,772,370 tons",
-    "seaLevelRise": "3 mm",
-    "airQuality": "17.71",
-    "forestCover": "1.1%"
-},
-"Azerbaijan": {
-    "avgTemp": "12.96°C",
-    "carbonEmissions": "33,614,235 tons",
-    "seaLevelRise": "3.84 mm",
-    "airQuality": "18.9",
-    "forestCover": "31%"
-},
-"Tajikistan": {
-    "avgTemp": "3.85°C",
-    "carbonEmissions": "6,049,757 tons",
-    "seaLevelRise": "0.41 mm",
-    "airQuality": "46",
-    "forestCover": "2.9%"
-},
-"United Arab Emirates": {
-    "avgTemp": "28.17°C",
-    "carbonEmissions": "218,788,684 tons",
-    "seaLevelRise": "2.2 mm",
-    "airQuality": "45.9",
-    "forestCover": "3.7%"
-},
-"Israel": {
-    "avgTemp": "19.99°C",
-    "carbonEmissions": "65,201,588 tons",
-    "seaLevelRise": "0.4 cm",
-    "airQuality": "18.8",
-    "forestCover": "7.1%"
-}
-
-
-            // Add more country details as needed
-        };
-
-        // Get the country details based on the clicked country name
-        const details = countryDetails[countryName];
-
-        // Display the details in the popup
-        document.getElementById('avgTemp').textContent = details.avgTemp;
-        document.getElementById('carbonEmissions').textContent = details.carbonEmissions;
-        document.getElementById('seaLevelRise').textContent = details.seaLevelRise;
-        document.getElementById('airQuality').textContent = details.airQuality;
-        document.getElementById('forestCover').textContent = details.forestCover;
-    }
-
-    // Add click event listener to more details button
-    document.getElementById("details").addEventListener("click", function(){
-        // Show the popup
-        document.querySelector(".popup").style.display ="flex";
-    });
-
-    // Add click event listener to close button
-    document.querySelector(".close").addEventListener("click",function(){
-        // Hide the popup
-        document.querySelector(".popup").style.display ="none";
-    });
-
-    // Add click event listener to each country path
-    document.querySelectorAll('path.allPaths').forEach(function(country) {
-        country.addEventListener('click', function() {
-            // Get country name from ID
-            const countryName = this.id;
-            // Update the text content with the name of the clicked country
-            document.getElementById('namep').textContent = countryName;
-            // Display country details
-            displayCountryDetails(countryName);
-            // Show the popup
-            document.querySelector(".popup").style.display = "flex";
-        });
-    });
-</script>
-<!-- Code injected by live-server -->
-<script>
-	// <![CDATA[  <-- For SVG support
-	if ('WebSocket' in window) {
-		(function () {
-			function refreshCSS() {
-				var sheets = [].slice.call(document.getElementsByTagName("link"));
-				var head = document.getElementsByTagName("head")[0];
-				for (var i = 0; i < sheets.length; ++i) {
-					var elem = sheets[i];
-					var parent = elem.parentElement || head;
-					parent.removeChild(elem);
-					var rel = elem.rel;
-					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
-						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
-						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
-					}
-					parent.appendChild(elem);
-				}
-			}
-			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
-			var address = protocol + window.location.host + window.location.pathname + '/ws';
-			var socket = new WebSocket(address);
-			socket.onmessage = function (msg) {
-				if (msg.data == 'reload') window.location.reload();
-				else if (msg.data == 'refreshcss') refreshCSS();
-			};
-			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
-				console.log('Live reload enabled.');
-				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
-			}
-		})();
-	}
-	else {
-		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
-	}
-	// ]]>
-</script>
+<script src="script.js" ></script>
 </body>
 </html>
